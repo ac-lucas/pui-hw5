@@ -6,8 +6,10 @@ class Navbar extends Component {
         super(props);
         this.state = {
             stringItems: "item",
-            showCart: false
+            showCart: false,
+            toggle: true
         }
+        this.toggle = this.handleToggle.bind(this);
     }
 
     pluralize() {
@@ -25,6 +27,13 @@ class Navbar extends Component {
         }
     }
 
+    handleToggle = (event) => {
+        this.setState ({
+            toggle: !this.state.toggle
+        })
+        this.props.cardCallBack(this.state.toggle)
+    }
+
 
 
     render() {
@@ -40,7 +49,7 @@ class Navbar extends Component {
 
                         <div className="navbar-links">
                             <a href="" id="selected-link">PRODUCTS</a>
-                            <a href="">CART</a>
+                            <a onClick={this.handleToggle}>CART</a>
                         </div>
 
                         <div className="cart-items" style={{ display: this.state.showCart ? "block" : "none" }}>

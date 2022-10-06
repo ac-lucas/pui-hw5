@@ -85,7 +85,8 @@ class Homepage extends Component {
             clicked: false,
             searchCategory: null,
             count: 0,
-            sort: ""
+            sort: "",
+            display: false
         }
     }
 
@@ -112,14 +113,25 @@ class Homepage extends Component {
     }
 
     handleSortChange = (event) => {
-        console.log(event.target.value)
         var tempSort = event.target.value
         this.setState({
             sort: tempSort
         })
     };
 
+    handleAddToCart = (displayCart) => {
+        this.setState({
+            display: displayCart
+        })
+
+    }
+
     render() {
+        let cartClass = 'cart';
+
+        if (this.state.display) {
+            cartClass += ' expanded';
+        }
 
         return (
             <div>
@@ -130,9 +142,13 @@ class Homepage extends Component {
                     glazing={this.state.tempGlazing}
                     pack={this.state.tempPack}
                     cost={this.state.itemCost}
-                    display={this.state.clicked}
+                    cardCallBack={this.handleAddToCart}
 
                 />
+
+                <div className={cartClass} style={{ display: this.state.display ? "block" : "none" }}>
+                    <p>hi</p>
+                </div>
 
                 <form action="/" method="get">
                     <input
