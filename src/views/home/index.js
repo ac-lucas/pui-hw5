@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './index.css';
 import Card from './Card';
 import Navbar from './Navbar';
+import { Dropdown, Option } from "./Dropdown";
+import { Sort } from './Sort'
 
 const { search } = window.location;
 const query = new URLSearchParams(search).get('s');
@@ -82,7 +84,8 @@ class Homepage extends Component {
             itemCost: "",
             clicked: false,
             searchCategory: null,
-            count: 0
+            count: 0,
+            sort: ""
         }
     }
 
@@ -97,17 +100,24 @@ class Homepage extends Component {
     }
 
     searchButtonHandler = (searchQuery) => {
-        console.log(searchQuery)
         this.state.searchCategory = searchQuery
     }
 
-    handleCount () {
+    handleCount() {
         if (this.state.count == 0) {
             return (
-            "No Match!"
+                "No Match!"
             )
         }
     }
+
+    handleSortChange = (event) => {
+        console.log(event.target.value)
+        var tempSort = event.target.value
+        this.setState({
+            sort: tempSort
+        })
+    };
 
     render() {
 
@@ -133,32 +143,42 @@ class Homepage extends Component {
                     <button type="submit" onClick={this.searchButtonHandler(query)}>Search</button>
                 </form>
 
+                <Dropdown
+                    action="/"
+                    onChange={this.handleSortChange}
+                >
+                    <Option textContent="Base Price" />
+                    <Option textContent="Name" />
+                </Dropdown>
+
                 <div className="cards row">
 
                     <div className="column" style={{ display: 'flex', flexDirection: 'row' }}>
-                        {this.state.cardData.map(
-                            (card, idx) => {
-                                var tempCardTitle = card.cardTitle.toLowerCase()
-                                if ((this.state.searchCategory == null) ||
-                                    (tempCardTitle.includes(this.state.searchCategory))) {
-                                    this.state.count++
-                                    return <Card
-                                        key={idx}
-                                        cardImgURL={card.cardImgURL}
-                                        cardAlt={card.cardAlt}
-                                        cardTitle={card.cardTitle}
-                                        cardPrice={card.cardPrice}
-                                        id1={card.id1}
-                                        id2={card.id2}
-                                        id3={card.id3}
-                                        id4={card.id4}
-                                        priceCallBack={this.handleCart}
-                                    />
-                                } else {
-                                    return <div />
+                        <Sort by={this.state.sort}>
+                            {this.state.cardData.map(
+                                (card, idx) => {
+                                    var tempCardTitle = card.cardTitle.toLowerCase()
+                                    if ((this.state.searchCategory == null) ||
+                                        (tempCardTitle.includes(this.state.searchCategory))) {
+                                        this.state.count++
+                                        return <Card
+                                            key={idx}
+                                            cardImgURL={card.cardImgURL}
+                                            cardAlt={card.cardAlt}
+                                            cardTitle={card.cardTitle}
+                                            cardPrice={card.cardPrice}
+                                            id1={card.id1}
+                                            id2={card.id2}
+                                            id3={card.id3}
+                                            id4={card.id4}
+                                            priceCallBack={this.handleCart}
+                                        />
+                                    } else {
+                                        return <div />
+                                    }
                                 }
-                            }
-                        )}
+                            )}
+                        </Sort>
                         {this.handleCount()}
                     </div>
 
