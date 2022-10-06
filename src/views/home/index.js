@@ -22,7 +22,8 @@ class Homepage extends Component {
                     id1: "id1",
                     id2: "id2",
                     id3: "id3",
-                    id4: "id4"
+                    id4: "id4",
+                    index: 0
                 },
                 {
                     cardImgURL: "assets/apple-cinnamon-roll.jpg",
@@ -32,7 +33,8 @@ class Homepage extends Component {
                     id1: "id5",
                     id2: "id6",
                     id3: "id7",
-                    id4: "id8"
+                    id4: "id8",
+                    index: 1
                 },
                 {
                     cardImgURL: "assets/raisin-cinnamon-roll.jpg",
@@ -42,7 +44,8 @@ class Homepage extends Component {
                     id1: "id9",
                     id2: "id10",
                     id3: "id11",
-                    id4: "id12"
+                    id4: "id12",
+                    index: 2
                 },
                 {
                     cardImgURL: "assets/walnut-cinnamon-roll.jpg",
@@ -52,7 +55,8 @@ class Homepage extends Component {
                     id1: "id13",
                     id2: "id14",
                     id3: "id15",
-                    id4: "id16"
+                    id4: "id16",
+                    index: 3
                 },
                 {
                     cardImgURL: "assets/double-chocolate-cinnamon-roll.jpg",
@@ -62,7 +66,8 @@ class Homepage extends Component {
                     id1: "id17",
                     id2: "id18",
                     id3: "id19",
-                    id4: "id20"
+                    id4: "id20",
+                    index: 4
                 },
                 {
                     cardImgURL: "assets/strawberry-cinnamon-roll.jpg",
@@ -72,8 +77,13 @@ class Homepage extends Component {
                     id1: "id21",
                     id2: "id22",
                     id3: "id23",
-                    id4: "id24"
+                    id4: "id24",
+                    index: 5
                 }
+            ],
+
+            cartAddedData: [
+
             ],
 
             totalPrice: 0,
@@ -86,17 +96,18 @@ class Homepage extends Component {
             searchCategory: null,
             count: 0,
             sort: "",
-            display: false
+            display: false,
+            idxToAdd: 0
         }
     }
 
-    handleCart = (priceData, title, glazing, pack, popup) => {
+    handleCart = (priceData, title, glazing, pack, popup, index) => {
         this.state.totalItems = +this.state.totalItems + +1
         this.setState({
             totalPrice: (+this.state.totalPrice + +priceData).toFixed(2),
             totalItems: +this.state.totalItems, tempTitle: title,
             tempGlazing: glazing, tempPack: pack, itemCost: priceData,
-            clicked: popup
+            clicked: popup, idxToAdd: index
         })
     }
 
@@ -126,6 +137,24 @@ class Homepage extends Component {
 
     }
 
+    addCardToCart = () => {
+        let newCartItem = {
+            cardImgURL: this.cardData[this.state.index].cardImgURL,
+            cardAlt: this.cardData[this.state.index].cardAlt,
+            cardTitle: this.cardData[this.state.index].cardTitle,
+            cardPrice: this.state.itemCost,
+            cardGlazing: this.state.tempGlazing,
+            cardPackSize: this.state.tempPack
+        }
+
+        let newCardData = this.state.cartAddedData
+        newCardData.push(newCartItem)
+        this.setState(prevState => ({
+            ...prevState,
+            cartAddedData: newCardData
+        }))
+    }
+
     render() {
         let cartClass = 'cart';
 
@@ -147,7 +176,31 @@ class Homepage extends Component {
                 />
 
                 <div className={cartClass} style={{ display: this.state.display ? "block" : "none" }}>
-                    <p>hi</p>
+                    {this.state.cardData.map(
+                        (card, idx) => {
+                            var tempCardTitle = card.cardTitle.toLowerCase()
+                            if ((this.state.searchCategory == null) ||
+                                (tempCardTitle.includes(this.state.searchCategory))) {
+                                this.state.count++
+                                return <Card
+                                    key={idx}
+                                    cardImgURL={card.cardImgURL}
+                                    cardAlt={card.cardAlt}
+                                    cardTitle={card.cardTitle}
+                                    cardPrice={card.cardPrice}
+                                    id1={card.id1}
+                                    id2={card.id2}
+                                    id3={card.id3}
+                                    id4={card.id4}
+                                    priceCallBack={this.handleCart}
+                                    cardIdx={card.index}
+                                />
+                            } else {
+                                return <div />
+                            }
+                        }
+                    )}
+                    
                 </div>
 
                 <form action="/" method="get">
@@ -188,6 +241,7 @@ class Homepage extends Component {
                                             id3={card.id3}
                                             id4={card.id4}
                                             priceCallBack={this.handleCart}
+                                            cardIdx={card.index}
                                         />
                                     } else {
                                         return <div />
