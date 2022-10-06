@@ -3,7 +3,8 @@ import './index.css';
 import Card from './Card';
 import Navbar from './Navbar';
 import { Dropdown, Option } from "./Dropdown";
-import { Sort } from './Sort'
+import { Sort } from './Sort';
+import Cart from './Cart'
 
 const { search } = window.location;
 const query = new URLSearchParams(search).get('s');
@@ -109,6 +110,7 @@ class Homepage extends Component {
             tempGlazing: glazing, tempPack: pack, itemCost: priceData,
             clicked: popup, idxToAdd: index
         })
+        this.addCardToCart()
     }
 
     searchButtonHandler = (searchQuery) => {
@@ -139,9 +141,9 @@ class Homepage extends Component {
 
     addCardToCart = () => {
         let newCartItem = {
-            cardImgURL: this.cardData[this.state.index].cardImgURL,
-            cardAlt: this.cardData[this.state.index].cardAlt,
-            cardTitle: this.cardData[this.state.index].cardTitle,
+            cardImgURL: this.state.cardData[this.state.idxToAdd].cardImgURL,
+            cardAlt: this.state.cardData[this.state.idxToAdd].cardAlt,
+            cardTitle: this.state.cardData[this.state.idxToAdd].cardTitle,
             cardPrice: this.state.itemCost,
             cardGlazing: this.state.tempGlazing,
             cardPackSize: this.state.tempPack
@@ -176,31 +178,20 @@ class Homepage extends Component {
                 />
 
                 <div className={cartClass} style={{ display: this.state.display ? "block" : "none" }}>
-                    {this.state.cardData.map(
-                        (card, idx) => {
-                            var tempCardTitle = card.cardTitle.toLowerCase()
-                            if ((this.state.searchCategory == null) ||
-                                (tempCardTitle.includes(this.state.searchCategory))) {
-                                this.state.count++
-                                return <Card
-                                    key={idx}
-                                    cardImgURL={card.cardImgURL}
-                                    cardAlt={card.cardAlt}
-                                    cardTitle={card.cardTitle}
-                                    cardPrice={card.cardPrice}
-                                    id1={card.id1}
-                                    id2={card.id2}
-                                    id3={card.id3}
-                                    id4={card.id4}
-                                    priceCallBack={this.handleCart}
-                                    cardIdx={card.index}
-                                />
-                            } else {
-                                return <div />
-                            }
+                    {this.state.cartAddedData.map(
+                        (cart, idx) => {
+                            return <Cart
+                                key={idx}
+                                cardImgURL={cart.cardImgURL}
+                                cardAlt={cart.cardAlt}
+                                cardTitle={cart.cardTitle}
+                                cardPrice={cart.cardPrice}
+                                cardGlazing={cart.cardGlazing}
+                                cardPackSize={cart.cardPackSize}
+                            />
                         }
                     )}
-                    
+
                 </div>
 
                 <form action="/" method="get">
