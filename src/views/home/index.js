@@ -3,6 +3,8 @@ import './index.css';
 import Card from './Card';
 import Navbar from './Navbar';
 
+const { search } = window.location;
+const query = new URLSearchParams(search).get('s');
 
 class Homepage extends Component {
 
@@ -78,21 +80,37 @@ class Homepage extends Component {
             tempGlazing: "",
             tempPack: "",
             itemCost: "",
-            clicked: false
+            clicked: false,
+            searchCategory: null,
+            count: 0
         }
     }
 
     handleCart = (priceData, title, glazing, pack, popup) => {
         this.state.totalItems = +this.state.totalItems + +1
-        this.setState({totalPrice: (+this.state.totalPrice + +priceData).toFixed(2), 
+        this.setState({
+            totalPrice: (+this.state.totalPrice + +priceData).toFixed(2),
             totalItems: +this.state.totalItems, tempTitle: title,
             tempGlazing: glazing, tempPack: pack, itemCost: priceData,
             clicked: popup
         })
     }
 
+    searchButtonHandler = (searchQuery) => {
+        console.log(searchQuery)
+        this.state.searchCategory = searchQuery
+    }
+
+    handleCount () {
+        if (this.state.count == 0) {
+            return (
+            "No Match!"
+            )
+        }
+    }
 
     render() {
+
         return (
             <div>
                 <Navbar
@@ -103,102 +121,45 @@ class Homepage extends Component {
                     pack={this.state.tempPack}
                     cost={this.state.itemCost}
                     display={this.state.clicked}
-                
+
                 />
+
+                <form action="/" method="get">
+                    <input
+                        type="text"
+                        id="header-search"
+                        name="s"
+                    />
+                    <button type="submit" onClick={this.searchButtonHandler(query)}>Search</button>
+                </form>
 
                 <div className="cards row">
 
-                    <div className="column" id="original">
-                        <Card
-                            cardImgURL={this.state.cardData[0].cardImgURL}
-                            cardAlt={this.state.cardData[0].cardAlt}
-                            cardTitle={this.state.cardData[0].cardTitle}
-                            cardPrice={this.state.cardData[0].cardPrice}
-                            id1 = {this.state.cardData[0].id1}
-                            id2 = {this.state.cardData[0].id2}
-                            id3 = {this.state.cardData[0].id3}
-                            id4 = {this.state.cardData[0].id4}
-                            priceCallBack = {this.handleCart}
-                        />
-
-                    </div>
-
-                    <div className="column" id="apple">
-                        <Card
-                            cardImgURL={this.state.cardData[1].cardImgURL}
-                            cardAlt={this.state.cardData[1].cardAlt}
-                            cardTitle={this.state.cardData[1].cardTitle}
-                            cardPrice={this.state.cardData[1].cardPrice}
-                            id1 = {this.state.cardData[1].id1}
-                            id2 = {this.state.cardData[1].id2}
-                            id3 = {this.state.cardData[1].id3}
-                            id4 = {this.state.cardData[1].id4}
-                            priceCallBack = {this.handleCart}
-                        />
-                    </div>
-
-                    <div className="column" id="raisin">
-                        <Card
-                            cardImgURL={this.state.cardData[2].cardImgURL}
-                            cardAlt={this.state.cardData[2].cardAlt}
-                            cardTitle={this.state.cardData[2].cardTitle}
-                            cardPrice={this.state.cardData[2].cardPrice}
-                            id1 = {this.state.cardData[2].id1}
-                            id2 = {this.state.cardData[2].id2}
-                            id3 = {this.state.cardData[2].id3}
-                            id4 = {this.state.cardData[2].id4}
-                            priceCallBack = {this.handleCart}
-                        />
-
-                    </div>
-
-                </div>
-
-                <div className="cards row" id="walnut">
-
-                    <div className="column">
-                        <Card
-                            cardImgURL={this.state.cardData[3].cardImgURL}
-                            cardAlt={this.state.cardData[3].cardAlt}
-                            cardTitle={this.state.cardData[3].cardTitle}
-                            cardPrice={this.state.cardData[3].cardPrice}
-                            id1 = {this.state.cardData[3].id1}
-                            id2 = {this.state.cardData[3].id2}
-                            id3 = {this.state.cardData[3].id3}
-                            id4 = {this.state.cardData[3].id4}
-                            priceCallBack = {this.handleCart}
-                        />
-
-                    </div>
-
-                    <div className="column" id="chocolate">
-                        <Card
-                            cardImgURL={this.state.cardData[4].cardImgURL}
-                            cardAlt={this.state.cardData[4].cardAlt}
-                            cardTitle={this.state.cardData[4].cardTitle}
-                            cardPrice={this.state.cardData[4].cardPrice}
-                            id1 = {this.state.cardData[4].id1}
-                            id2 = {this.state.cardData[4].id2}
-                            id3 = {this.state.cardData[4].id3}
-                            id4 = {this.state.cardData[4].id4}
-                            priceCallBack = {this.handleCart}
-                        />
-
-                    </div>
-
-                    <div className="column" id="strawberry">
-                        <Card
-                            cardImgURL={this.state.cardData[5].cardImgURL}
-                            cardAlt={this.state.cardData[5].cardAlt}
-                            cardTitle={this.state.cardData[5].cardTitle}
-                            cardPrice={this.state.cardData[5].cardPrice}
-                            id1 = {this.state.cardData[5].id1}
-                            id2 = {this.state.cardData[5].id2}
-                            id3 = {this.state.cardData[5].id3}
-                            id4 = {this.state.cardData[5].id4}
-                            priceCallBack = {this.handleCart}
-                        />
-
+                    <div className="column" style={{ display: 'flex', flexDirection: 'row' }}>
+                        {this.state.cardData.map(
+                            (card, idx) => {
+                                var tempCardTitle = card.cardTitle.toLowerCase()
+                                if ((this.state.searchCategory == null) ||
+                                    (tempCardTitle.includes(this.state.searchCategory))) {
+                                    this.state.count++
+                                    return <Card
+                                        key={idx}
+                                        cardImgURL={card.cardImgURL}
+                                        cardAlt={card.cardAlt}
+                                        cardTitle={card.cardTitle}
+                                        cardPrice={card.cardPrice}
+                                        id1={card.id1}
+                                        id2={card.id2}
+                                        id3={card.id3}
+                                        id4={card.id4}
+                                        priceCallBack={this.handleCart}
+                                    />
+                                } else {
+                                    return <div />
+                                }
+                            }
+                        )}
+                        {this.handleCount()}
                     </div>
 
                 </div>
