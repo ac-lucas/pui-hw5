@@ -90,8 +90,8 @@ class Homepage extends Component {
             totalPrice: 0,
             totalItems: 0,
             tempTitle: "",
-            tempGlazing: "",
-            tempPack: "",
+            tempGlazing: "Keep original",
+            tempPack: "1",
             itemCost: "",
             clicked: false,
             searchCategory: null,
@@ -100,6 +100,7 @@ class Homepage extends Component {
             display: false,
             idxToAdd: 0
         }
+        this.sort = this.handleSortChange.bind(this)
     }
 
     handleCart = (priceData, title, glazing, pack, popup, index) => {
@@ -110,7 +111,6 @@ class Homepage extends Component {
             tempGlazing: glazing, tempPack: pack, itemCost: priceData,
             clicked: popup, idxToAdd: index
         })
-        this.addCardToCart()
     }
 
     searchButtonHandler = (searchQuery) => {
@@ -157,6 +157,14 @@ class Homepage extends Component {
         }))
     }
 
+    getListLength() {
+        if (this.state.cartAddedData.length === 0) {
+            return <div>
+                <p>The cart is empty!</p>
+            </div>
+        }
+    }
+
     render() {
         let cartClass = 'cart';
 
@@ -177,7 +185,7 @@ class Homepage extends Component {
 
                 />
 
-                <div className={cartClass} style={{ display: this.state.display ? "block" : "none" }}>
+                <div className={cartClass} style={{ display: this.state.display ? "flex" : "none", flexDirection: 'row'}}>
                     {this.state.cartAddedData.map(
                         (cart, idx) => {
                             return <Cart
@@ -191,8 +199,10 @@ class Homepage extends Component {
                             />
                         }
                     )}
+                    {this.getListLength()}
 
                 </div>
+
 
                 <form action="/" method="get">
                     <input
@@ -232,6 +242,7 @@ class Homepage extends Component {
                                             id3={card.id3}
                                             id4={card.id4}
                                             priceCallBack={this.handleCart}
+                                            addToCartCallBack={this.addCardToCart}
                                             cardIdx={card.index}
                                         />
                                     } else {

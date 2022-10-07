@@ -13,7 +13,7 @@ class Card extends Component {
             multiplier: 1,
             cardTotalPrice: 0,
             glazingName: "Keep original",
-            itemPackSize: 0,
+            itemPackSize: 1,
             showCart: false,
             checked: false,
             itemValue1: "1",
@@ -70,6 +70,7 @@ class Card extends Component {
     handleAddToCart = (event) => {
         this.state.showCart = true
         this.props.priceCallBack(this.state.updatedCardPrice, this.props.cardTitle, this.state.glazingName, this.state.itemPackSize, this.state.showCart, this.props.cardIdx)
+        this.props.addToCartCallBack()
         this.state.showCart = false
     };
 
