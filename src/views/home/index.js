@@ -237,7 +237,7 @@ class Homepage extends Component {
                 </div>
 
                 <div className="search-sort">
-                    <form action="/" method="get">
+                    <form action="/pui-hw5" method="get">
                         <input
                             type="text"
                             id="header-search"
