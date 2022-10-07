@@ -103,6 +103,15 @@ class Homepage extends Component {
         this.sort = this.handleSortChange.bind(this)
     }
 
+    pluralize() {
+        if (this.state.totalItems != 1) {
+            return "items"
+        }
+        else {
+            return "item"
+        }
+    }
+
     handleCart = (priceData, title, glazing, pack, popup) => {
         this.state.totalItems = +this.state.totalItems + +1
         this.setState({
@@ -196,6 +205,8 @@ class Homepage extends Component {
                 />
 
                 <div className={cartClass} style={{ display: this.state.display ? "flex" : "none", flexDirection: 'row' }}>
+                    <p>Shopping Cart ({this.state.totalItems} {this.pluralize()})</p>
+                    <p>Total: $ {this.state.totalPrice}</p>
                     {this.state.cartAddedData.map(
                         (cart, idx) => {
                             return <Cart
@@ -258,7 +269,8 @@ class Homepage extends Component {
                                             cardIdx={card.index}
                                         />
                                     } else {
-                                        return <div />
+                                        return <div 
+                                        key={idx}/>
                                     }
                                 }
                             )}
