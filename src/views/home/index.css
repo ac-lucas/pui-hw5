@@ -87,8 +87,26 @@ label {
 
 /* main content */
 
+.search-sort {
+  white-space: nowrap;
+  margin-left: 50px;
+}
+
+form {
+  display: inline-block;
+}
+
+.sort {
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.sort > p {
+  display: inline-block;
+}
+
 .card {
-  display: flex
+  display: flex;
 }
 
 .row {
@@ -123,7 +141,7 @@ label {
   margin-right: 36px;
 }
 
-select {
+.card-glazing > select {
   padding: 7px 10px 7px 1px;
   font-size: 20px;
   border: 2px solid black;

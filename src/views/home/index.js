@@ -211,7 +211,7 @@ class Homepage extends Component {
                         (cart, idx) => {
                             return <Cart
                                 key={idx}
-                                cardIndex = {idx}
+                                cardIndex={idx}
                                 cardImgURL={cart.cardImgURL}
                                 cardAlt={cart.cardAlt}
                                 cardTitle={cart.cardTitle}
@@ -226,23 +226,27 @@ class Homepage extends Component {
 
                 </div>
 
+                <div className="search-sort">
+                    <form action="/" method="get">
+                        <input
+                            type="text"
+                            id="header-search"
+                            name="s"
+                        />
+                        <button type="submit" onClick={this.searchButtonHandler(query)}>Search</button>
+                    </form>
 
-                <form action="/" method="get">
-                    <input
-                        type="text"
-                        id="header-search"
-                        name="s"
-                    />
-                    <button type="submit" onClick={this.searchButtonHandler(query)}>Search</button>
-                </form>
-
-                <Dropdown
-                    action="/"
-                    onChange={this.handleSortChange}
-                >
-                    <Option textContent="Base Price" />
-                    <Option textContent="Name" />
-                </Dropdown>
+                    <div className="sort">
+                        <p>Sort by: </p>
+                        <Dropdown
+                            action="/"
+                            onChange={this.handleSortChange}
+                        >
+                            <Option textContent="Base Price" />
+                            <Option textContent="Name" />
+                        </Dropdown>
+                    </div>
+                </div>
 
                 <div>
 
@@ -269,8 +273,8 @@ class Homepage extends Component {
                                             cardIdx={card.index}
                                         />
                                     } else {
-                                        return <div 
-                                        key={idx}/>
+                                        return <div
+                                            key={idx} />
                                     }
                                 }
                             )}
