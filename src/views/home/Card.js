@@ -78,7 +78,7 @@ class Card extends Component {
 
         return (
             
-            <div>
+            <div className="cards column">
                 <img className="card-image" src={this.props.cardImgURL} alt={this.props.cardAlt} />
 
                 <div className="card-title">

@@ -244,9 +244,9 @@ class Homepage extends Component {
                     <Option textContent="Name" />
                 </Dropdown>
 
-                <div className="cards row">
+                <div>
 
-                    <div className="column" style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className="cards row">
                         <Sort by={this.state.sort}>
                             {this.state.cardData.map(
                                 (card, idx) => {

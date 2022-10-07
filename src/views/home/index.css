@@ -87,9 +87,15 @@ label {
 
 /* main content */
 
+.card {
+  display: flex
+}
+
 .row {
   display: flex;
   margin-left: 50px;
+  flex-wrap: wrap;
+  flex: 0 0 20%;
 }
 
 .column {
