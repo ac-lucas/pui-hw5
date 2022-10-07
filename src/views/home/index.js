@@ -139,15 +139,15 @@ class Homepage extends Component {
 
     }
 
-    addCardToCart = (idx) => {
+    addCardToCart = (price, glazing, packSize, idx) => {
         this.state.idxToAdd = idx
         let newCartItem = {
             cardImgURL: this.state.cardData[this.state.idxToAdd].cardImgURL,
             cardAlt: this.state.cardData[this.state.idxToAdd].cardAlt,
             cardTitle: this.state.cardData[this.state.idxToAdd].cardTitle,
-            cardPrice: this.state.itemCost,
-            cardGlazing: this.state.tempGlazing,
-            cardPackSize: this.state.tempPack
+            cardPrice: price,
+            cardGlazing: glazing,
+            cardPackSize: packSize
         }
 
         let newCardData = this.state.cartAddedData
