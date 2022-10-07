@@ -212,7 +212,7 @@ class Homepage extends Component {
                         <p className="shopping-cart">Shopping Cart ({this.state.totalItems} {this.pluralize()})</p>
                         <p className="total">Total: $ {this.state.totalPrice}</p>
                     </div>
-                    <div style={{ display: "flex", flexDirection: 'row' }}>
+                    <div className="cart-items" style={{ display: "flex", flexDirection: 'row' }}>
                         {this.state.cartAddedData.map(
                             (cart, idx) => {
                                 return <Cart

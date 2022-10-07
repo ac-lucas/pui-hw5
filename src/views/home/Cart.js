@@ -14,23 +14,14 @@ class Cart extends Component {
 
         return (
             
-            <div>
-                <img className="card-image" src={this.props.cardImgURL} alt={this.props.cardAlt} />
+            <div className="cart-items">
+                <img className="cart-image" src={this.props.cardImgURL} alt={this.props.cardAlt} />
 
-                <div className="card-title">
-                    <p>{this.props.cardTitle}</p>
-                </div>
-
-                <div className="card-glazing">
-                    <p>Glazing: {this.props.cardGlazing}</p>
-                </div>
-
-                <div className="card-size">
-                    <p>Pack size: {this.props.cardPackSize}</p>
-                </div>
-
-                <div className="card-price">
-                    <b>${this.props.cardPrice}</b>
+                <div className="card-text">
+                    {this.props.cardTitle} <br /> Glazing: {this.props.cardGlazing} <br /> Pack size: {this.props.cardPackSize}<br/>
+                    <b>$ {this.props.cardPrice}</b>
+                    <br/>
+                    <br/>
                 </div>
 
                 <div className="remove" onClick={() => this.props.onRemove(this.props.cardIndex, this.props.cardPrice)}>
