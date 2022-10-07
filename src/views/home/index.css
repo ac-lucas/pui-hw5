@@ -82,17 +82,18 @@ label {
   margin-left: 70px;
 }
 
-form {
+.search-sort input {
+  width: 300px;
+}
+
+form,
+.sort>p {
   display: inline-block;
 }
 
 .sort {
   display: inline-block;
   margin-left: 30px;
-}
-
-.sort > p {
-  display: inline-block;
 }
 
 .divider {
@@ -159,7 +160,7 @@ form {
   border: 2px solid black;
 }
 
-.card-price-right > button {
+.card-price-right>button {
   cursor: pointer;
   background-color: white;
   border: 2px solid black;
@@ -171,7 +172,7 @@ label {
   margin-right: 36px;
 }
 
-.card-glazing > select {
+.card-glazing>select {
   padding: 7px 10px 7px 1px;
   font-size: 20px;
   border: 2px solid black;

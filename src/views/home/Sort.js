@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 
     export function Sort (props , by) {
         if (props.by == "Name") {
-            // If no 'sort by property' provided, return original list
             return React.Children.toArray(props.children).sort((a,b) => a.props.cardTitle > b.props.cardTitle ? 1 : -1,);
         }
         else if (props.by == "Base Price") {
