@@ -6,7 +6,7 @@ import { Dropdown, Option } from "./Dropdown";
 import { Sort } from './Sort';
 import Cart from './Cart'
 
-const { search } = window.location;
+const { search } = "https://ac-lucas.github.io/pui-hw5/"
 const query = new URLSearchParams(search).get('s');
 
 class Homepage extends Component {
