@@ -103,13 +103,13 @@ class Homepage extends Component {
         this.sort = this.handleSortChange.bind(this)
     }
 
-    handleCart = (priceData, title, glazing, pack, popup, index) => {
+    handleCart = (priceData, title, glazing, pack, popup) => {
         this.state.totalItems = +this.state.totalItems + +1
         this.setState({
             totalPrice: (+this.state.totalPrice + +priceData).toFixed(2),
             totalItems: +this.state.totalItems, tempTitle: title,
             tempGlazing: glazing, tempPack: pack, itemCost: priceData,
-            clicked: popup, idxToAdd: index
+            clicked: popup
         })
     }
 
@@ -139,7 +139,8 @@ class Homepage extends Component {
 
     }
 
-    addCardToCart = () => {
+    addCardToCart = (idx) => {
+        this.state.idxToAdd = idx
         let newCartItem = {
             cardImgURL: this.state.cardData[this.state.idxToAdd].cardImgURL,
             cardAlt: this.state.cardData[this.state.idxToAdd].cardAlt,
@@ -165,6 +166,15 @@ class Homepage extends Component {
         }
     }
 
+    removeHandler = (idxToRemove) => {
+        const newCardData = this.state.cartAddedData;
+        newCardData.splice(idxToRemove, 1);
+        this.setState(prevState => ({
+            ...prevState,
+            cartAddedData: newCardData
+        }))
+    }
+
     render() {
         let cartClass = 'cart';
 
@@ -185,17 +195,19 @@ class Homepage extends Component {
 
                 />
 
-                <div className={cartClass} style={{ display: this.state.display ? "flex" : "none", flexDirection: 'row'}}>
+                <div className={cartClass} style={{ display: this.state.display ? "flex" : "none", flexDirection: 'row' }}>
                     {this.state.cartAddedData.map(
                         (cart, idx) => {
                             return <Cart
                                 key={idx}
+                                cardIndex = {idx}
                                 cardImgURL={cart.cardImgURL}
                                 cardAlt={cart.cardAlt}
                                 cardTitle={cart.cardTitle}
                                 cardPrice={cart.cardPrice}
                                 cardGlazing={cart.cardGlazing}
                                 cardPackSize={cart.cardPackSize}
+                                onRemove={this.removeHandler}
                             />
                         }
                     )}

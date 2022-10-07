@@ -32,6 +32,10 @@ class Cart extends Component {
                 <div className="card-price">
                     <b>${this.props.cardPrice}</b>
                 </div>
+
+                <div className="remove" onClick={() => this.props.onRemove(this.props.cardIndex)}>
+                    Remove
+                </div>
             </div>
         )
     }
