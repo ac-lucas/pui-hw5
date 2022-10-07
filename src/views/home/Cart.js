@@ -33,7 +33,7 @@ class Cart extends Component {
                     <b>${this.props.cardPrice}</b>
                 </div>
 
-                <div className="remove" onClick={() => this.props.onRemove(this.props.cardIndex)}>
+                <div className="remove" onClick={() => this.props.onRemove(this.props.cardIndex, this.props.cardPrice)}>
                     Remove
                 </div>
             </div>

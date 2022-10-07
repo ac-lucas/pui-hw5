@@ -106,7 +106,25 @@ form {
 }
 
 .divider {
-  border: 2px solid black;
+  border: 2px solid #362e24;
+}
+
+.cart-info {
+  white-space: nowrap;
+}
+
+.shopping-cart {
+  margin-left: 30px;
+  display: inline-block;
+}
+
+.total {
+  float: right;
+  margin-right: 100px;
+}
+
+.empty {
+  margin-left: 30px;
 }
 
 .card {

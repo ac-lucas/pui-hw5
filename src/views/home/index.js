@@ -175,12 +175,14 @@ class Homepage extends Component {
         }
     }
 
-    removeHandler = (idxToRemove) => {
+    removeHandler = (idxToRemove, price, items) => {
         const newCardData = this.state.cartAddedData;
         newCardData.splice(idxToRemove, 1);
         this.setState(prevState => ({
             ...prevState,
-            cartAddedData: newCardData
+            cartAddedData: newCardData,
+            totalPrice: +this.state.totalPrice - +price,
+            totalItems: +this.state.totalItems - +1
         }))
     }
 
@@ -204,10 +206,12 @@ class Homepage extends Component {
 
                 />
 
-                <div className={cartClass} style={{ display: this.state.display ? "block" : "none"}}>
+                <div className={cartClass} style={{ display: this.state.display ? "block" : "none" }}>
                     <hr className="divider" />
-                    <p>Shopping Cart ({this.state.totalItems} {this.pluralize()})</p>
-                    <p>Total: $ {this.state.totalPrice}</p>
+                    <div className="cart-info">
+                        <p className="shopping-cart">Shopping Cart ({this.state.totalItems} {this.pluralize()})</p>
+                        <p className="total">Total: $ {this.state.totalPrice}</p>
+                    </div>
                     <div style={{ display: "flex", flexDirection: 'row' }}>
                         {this.state.cartAddedData.map(
                             (cart, idx) => {
@@ -218,14 +222,16 @@ class Homepage extends Component {
                                     cardAlt={cart.cardAlt}
                                     cardTitle={cart.cardTitle}
                                     cardPrice={cart.cardPrice}
-                                     cardGlazing={cart.cardGlazing}
+                                    cardGlazing={cart.cardGlazing}
                                     cardPackSize={cart.cardPackSize}
                                     onRemove={this.removeHandler}
                                 />
                             }
                         )}
                     </div>
-                    {this.getListLength()}
+                    <div className="empty">
+                        {this.getListLength()}
+                    </div>
                     <hr className="divider" />
 
                 </div>
